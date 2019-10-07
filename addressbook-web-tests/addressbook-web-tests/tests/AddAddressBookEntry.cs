@@ -16,10 +16,9 @@ namespace WebAddressbookTests
 	[Test]
 	public void EditAddressBookEntry()
 		{
-			GoToHomePage();
-			Login(new AccountData("admin", "secret"));
-			GoToAddNewPage();
-			InitNewContactCreation();
+			
+			app.Navigator.GoToAddNewPage();
+			app.Contacts.InitNewContactCreation();
 			ContactData contact = new ContactData("aaa");
 			contact.Middlename = "bbb";
 			contact.Lastname = "ccc";
@@ -38,9 +37,9 @@ namespace WebAddressbookTests
 			contact.Address2 = "rrr";
 			contact.Phone2 = "sss";
 			contact.Notes = "ttt";
-			FillContactForm(contact);
-			SubmitContactCreation();
-			ReturToContactPage();
+			app.Contacts.FillContactForm(contact);
+			app.Contacts.SubmitContactCreation();
+			app.Navigator.ReturnToContactPage();
 		}
 	}
 }
