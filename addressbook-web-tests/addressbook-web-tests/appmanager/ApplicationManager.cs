@@ -36,8 +36,11 @@ namespace WebAddressbookTests
 			get
 			{
 				return driver;
+				driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(3));
 			}
 		}
+
+			
 		public void Stop()
 		{
 			try
