@@ -23,6 +23,7 @@ namespace WebAddressbookTests
 		public ApplicationManager()
 		{
 			driver = new FirefoxDriver();
+			driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(3));
 			baseURL = "http://localhost:8080/";
 
 			loginHelper = new LoginHelper(this);
@@ -36,7 +37,6 @@ namespace WebAddressbookTests
 			get
 			{
 				return driver;
-				driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(3));
 			}
 		}
 
