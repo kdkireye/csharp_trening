@@ -10,8 +10,8 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
 	[TestFixture]
-	public class AddAddressBookEntry : TestBase
-    {
+	public class AddAddressBookEntry : AuthTestBase
+	{
  
 	[Test]
 	public void EditAddressBookEntry()
