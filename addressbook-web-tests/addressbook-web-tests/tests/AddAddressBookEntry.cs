@@ -39,7 +39,7 @@ namespace WebAddressbookTests
 			contact.Notes = "ttt";
 			app.Contacts.FillContactForm(contact);
 			app.Contacts.SubmitContactCreation();
-			app.Navigator.GoToContactPage();
+			app.Navigator.ReturnToContactPage();
 		}
 	}
 }

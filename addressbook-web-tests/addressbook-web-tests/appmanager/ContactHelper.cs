@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -12,22 +14,21 @@ namespace WebAddressbookTests
 {
 	public class ContactHelper : HelperBase
 	{
+		public bool acceptNextAlert { get; private set; }
 
 		public ContactHelper(ApplicationManager manager) : base(manager)
 		{
 		}
 		public ContactHelper SubmitContactCreation()
 		{
-			manager.Navigator.GoToContactPage();
-
-			driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+			driver.FindElement(By.XPath("//input[21]")).Click();
 			return this;
 		}
 
 
 		public ContactHelper ReturnToContactPage()
 		{
-			driver.FindElement(By.LinkText("home page")).Click();
+			driver.FindElement(By.LinkText("home")).Click();
 			return this;
 		}
 
@@ -35,7 +36,7 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToContactPage();
 
-			SelectContact(v);
+			SelectContact(1);
 			InitContactModification();
 			FillContactForm(newData);
 			SubmitContactModification();
@@ -45,16 +46,21 @@ namespace WebAddressbookTests
 
 		public ContactHelper Remove(int v)
 		{
-			manager.Navigator.GoToContactPage();
+			manager.Navigator.GoToHomePage();
 
-			SelectContact(v);
-			InitContactModification();
+			SelectContact(1);
+			acceptNextAlert = true;
 			RemoveContact();
+			Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
 			ReturnToContactPage();
 			return this;
 		}
 
-	
+		private void chooseOkOnNextConfirmation()
+		{
+			throw new NotImplementedException();
+		}
+
 		public ContactHelper FillContactForm(ContactData contact)
 		{
 			driver.FindElement(By.Name("firstname")).Clear();
@@ -160,8 +166,55 @@ namespace WebAddressbookTests
 
 		public ContactHelper RemoveContact()
 		{
-			driver.FindElement(By.XPath("(//input[@name='update'])[2]")).Click();
+			driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
 			return this;
+		}
+		private bool IsElementPresent(By by)
+		{
+			try
+			{
+				driver.FindElement(by);
+				return true;
+			}
+			catch (NoSuchElementException)
+			{
+				return false;
+			}
+		}
+
+		private bool IsAlertPresent()
+		{
+			try
+			{
+				driver.SwitchTo().Alert();
+				return true;
+			}
+			catch (NoAlertPresentException)
+			{
+				return false;
+			}
+		}
+
+		private string CloseAlertAndGetItsText()
+		{
+			try
+			{
+				IAlert alert = driver.SwitchTo().Alert();
+				string alertText = alert.Text;
+				if (acceptNextAlert)
+				{
+					alert.Accept();
+				}
+				else
+				{
+					alert.Dismiss();
+				}
+				return alertText;
+			}
+			finally
+			{
+				acceptNextAlert = true;
+			}
 		}
 	}
 }
