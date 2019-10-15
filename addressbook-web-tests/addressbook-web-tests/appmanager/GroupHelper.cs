@@ -45,7 +45,7 @@ namespace WebAddressbookTests
 			SelectGroup(p);
 			RemoveGroup();
 			ReturnToGroupsPage();
-			throw new NotImplementedException();
+			return this;
 		}
 
 		public GroupHelper InitGroupCreation()
