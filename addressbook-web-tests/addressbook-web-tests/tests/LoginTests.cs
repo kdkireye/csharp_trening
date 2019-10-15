@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace WebAddressbookTests
@@ -12,6 +15,8 @@ namespace WebAddressbookTests
 
 	public class LoginTests : TestBase
 	{
+
+
 		[Test]
 		public void LoginWithCredentials()
 		{
@@ -29,9 +34,11 @@ namespace WebAddressbookTests
 		[Test]
 		public void LoginWithInvalidCredentials()
 		{
+
 			//prepare (Подготовка)
 			app.Auth.Logout();
 
+		
 			// action (действие)
 			AccountData account = new AccountData("admin", "123456");
 			app.Auth.Login(account);
