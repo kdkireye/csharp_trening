@@ -52,6 +52,8 @@ namespace WebAddressbookTests
 			acceptNextAlert = true;
 			RemoveContact();
 			Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+			driver.FindElement(By.CssSelector("div.msgbox"));
+			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
 			ReturnToContactPage();
 			return this;
 		}
