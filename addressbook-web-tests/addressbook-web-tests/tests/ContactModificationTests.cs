@@ -34,7 +34,7 @@ namespace WebAddressbookTests.tests
 			newData.Notes = "vvv";
 
 
-			app.Contacts.Modify(1, newData);
+			app.Contacts.Modify(newData);
 		}
 	}
 }
