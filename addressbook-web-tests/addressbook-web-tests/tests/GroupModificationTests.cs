@@ -15,10 +15,10 @@ namespace WebAddressbookTests.tests
 		public void GroupModificationTest()
 		{
 			GroupData newData = new GroupData("zzz");
-			newData.Header = "";
-			newData.Footer = "";
+			newData.Header = "jhfglub";
+			newData.Footer = "hgfhgbhlkljk;";
 
-			app.Groups.Modify(1, newData);
+			app.Groups.Modify(newData);
 		}
 	}
 }

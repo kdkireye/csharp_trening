@@ -27,22 +27,54 @@ namespace WebAddressbookTests
 			return this;
 		}
 
-		public GroupHelper Modify(int p, GroupData newData)
+		public GroupHelper Modify(GroupData newData)
 		{
 			manager.Navigator.GoToGroupsPage();
-			SelectGroup(p);
-			InitGroupModification();
-			FillGroupForm(newData);
-			SubmitGroupModification();
-			ReturnToGroupsPage();
-			return this;
+
+			if (IsNotGroup())
+			{
+				if (IsGroup())
+				{
+					SelectGroup(1);
+					InitGroupModification();
+					FillGroupForm(newData);
+					SubmitGroupModification();
+					ReturnToGroupsPage();
+				}
+
+				InitGroupCreation();
+
+				ReturnToGroupsPage();
+				SelectGroup(1);
+				InitGroupModification();
+				FillGroupForm(newData);
+				SubmitGroupModification();
+				ReturnToGroupsPage();
+
+			}
 		}
 
-		public GroupHelper Remove(int p)
+		public bool  IsNotGroup()
+		{
+			return NoSuchElementException(By.ClassName("group"));
+			
+		}
+
+		public bool NoSuchElementException(By by)
+		{
+			return true;
+		}
+
+		public bool IsGroup()
+		{
+			return IsElementPresent(By.ClassName("group"));
+		}
+
+		public GroupHelper Remove()
 		{
 			manager.Navigator.GoToGroupsPage();
 
-			SelectGroup(p);
+			SelectGroup(1);
 			RemoveGroup();
 			ReturnToGroupsPage();
 			return this;
@@ -96,4 +128,6 @@ namespace WebAddressbookTests
 			return this;
 		}
 	}
-}
+
+
+	}

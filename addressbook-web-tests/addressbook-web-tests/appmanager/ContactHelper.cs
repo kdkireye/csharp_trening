@@ -87,7 +87,7 @@ namespace WebAddressbookTests
 			new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText("2");
 			driver.FindElement(By.XPath("(//option[@value='2'])[2]")).Click();
 			new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText("March");
-			driver.FindElement(By.XPath("(//option[@value='March'])[2]")).Click();
+			driver.FindElement(By.XPath("(//option[@value='March'])")).Click();
 			Type(By.Name("ayear"), "2023");
 			Type(By.Name("homepage"), contact.Homepage);
 			Type(By.Name("address2"), contact.Address2);
@@ -125,6 +125,9 @@ namespace WebAddressbookTests
 
 		public ContactHelper RemoveContact()
 		{
+		//	if (driver.Url == baseUrl + "/addressbook"
+			//	&& )
+
 			driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
 			return this;
 		}
