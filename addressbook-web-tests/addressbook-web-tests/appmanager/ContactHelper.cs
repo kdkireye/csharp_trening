@@ -54,7 +54,7 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToContactPage();
 
-			IsModifyContact();
+			
 			SelectContact(1);
 			InitContactModification();
 			FillContactForm(newData);
@@ -63,7 +63,7 @@ namespace WebAddressbookTests
 			return this;
 		}
 
-		private void IsModifyContact()
+		public void IsModifyContact()
 		{
 			if (IsElementPresent(By.ClassName("center")))
 				{
@@ -78,7 +78,7 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToHomePage();
 
-			IsModifyContact();
+			
 			SelectContact(1);
 			acceptNextAlert = true;
 			RemoveContact();

@@ -31,7 +31,6 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToGroupsPage();
 
-			IsModifyGroup();
 			SelectGroup(1);
 			InitGroupModification();
 			FillGroupForm(newData);
@@ -40,7 +39,7 @@ namespace WebAddressbookTests
 			return this;
 		}
 
-		private void IsModifyGroup()
+		public void IsModifyGroup()
 		{
 			if (IsElementPresent(By.ClassName("group")))
 			{
@@ -54,7 +53,7 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToGroupsPage();
 
-			IsModifyGroup();
+			
 			SelectGroup(1);
 			RemoveGroup();
 			ReturnToGroupsPage();
