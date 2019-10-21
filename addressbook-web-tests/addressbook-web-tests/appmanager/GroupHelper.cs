@@ -31,49 +31,30 @@ namespace WebAddressbookTests
 		{
 			manager.Navigator.GoToGroupsPage();
 
-			if (IsNotGroup())
+			IsModifyGroup();
+			SelectGroup(1);
+			InitGroupModification();
+			FillGroupForm(newData);
+			SubmitGroupModification();
+			ReturnToGroupsPage();
+			return this;
+		}
+
+		private void IsModifyGroup()
+		{
+			if (IsElementPresent(By.ClassName("group")))
 			{
-				if (IsGroup())
-				{
-					SelectGroup(1);
-					InitGroupModification();
-					FillGroupForm(newData);
-					SubmitGroupModification();
-					ReturnToGroupsPage();
-				}
-
-				InitGroupCreation();
-
-				ReturnToGroupsPage();
-				SelectGroup(1);
-				InitGroupModification();
-				FillGroupForm(newData);
-				SubmitGroupModification();
-				ReturnToGroupsPage();
-
+				return;
 			}
-		}
 
-		public bool  IsNotGroup()
-		{
-			return NoSuchElementException(By.ClassName("group"));
-			
-		}
-
-		public bool NoSuchElementException(By by)
-		{
-			return true;
-		}
-
-		public bool IsGroup()
-		{
-			return IsElementPresent(By.ClassName("group"));
+			Create(new GroupData("qqq"));
 		}
 
 		public GroupHelper Remove()
 		{
 			manager.Navigator.GoToGroupsPage();
 
+			IsModifyGroup();
 			SelectGroup(1);
 			RemoveGroup();
 			ReturnToGroupsPage();
@@ -129,5 +110,5 @@ namespace WebAddressbookTests
 		}
 	}
 
-
+	
 	}
