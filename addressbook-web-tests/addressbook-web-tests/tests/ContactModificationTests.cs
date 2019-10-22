@@ -33,8 +33,17 @@ namespace WebAddressbookTests.tests
 			newData.Phone2 = "bbb";
 			newData.Notes = "vvv";
 
+			List<ContactData> oldContacts = app.Contacts.GetContactList();
+
 			app.Contacts.IsModifyContact();
 			app.Contacts.Modify(newData);
+
+			List<ContactData> newContacts = app.Contacts.GetContactList();
+			oldContacts[0].Firstname = newData.Firstname;
+			oldContacts[0].Lastname = newData.Lastname;
+			oldContacts.Sort();
+			newContacts.Sort();
+			Assert.AreEqual(oldContacts, newContacts);
 		}
 	}
 }

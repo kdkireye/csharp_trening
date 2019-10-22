@@ -25,6 +25,7 @@ namespace WebAddressbookTests
 			manager.Navigator.GoToContactPage();
 
 			GoToAddNewPage();
+			InitNewContactCreation();
 			FillContactForm(contact);
 			SubmitContactCreation();
 			ReturnToContactPage();
@@ -55,13 +56,14 @@ namespace WebAddressbookTests
 			manager.Navigator.GoToContactPage();
 
 			
-			SelectContact(1);
+			SelectContact(0);
 			InitContactModification();
 			FillContactForm(newData);
 			SubmitContactModification();
 			ReturnToContactPage();
 			return this;
 		}
+
 
 		public void IsModifyContact()
 		{
@@ -74,12 +76,12 @@ namespace WebAddressbookTests
 			Create(new ContactData("Kristina"));
 		}
 
-		public ContactHelper Remove()
+		public ContactHelper Remove(int n)
 		{
 			manager.Navigator.GoToHomePage();
 
 			
-			SelectContact(1);
+			SelectContact(0);
 			acceptNextAlert = true;
 			RemoveContact();
 			Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
@@ -136,7 +138,7 @@ namespace WebAddressbookTests
 
 		public ContactHelper SelectContact(int index)
 		{
-			driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+			driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
 			return this;
 		}
 
@@ -159,6 +161,21 @@ namespace WebAddressbookTests
 			driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
 			return this;
 		}
+
+
+		public List<ContactData> GetContactList()
+		{
+			List<ContactData> contacts = new List<ContactData>();
+			manager.Navigator.GoToContactPage();
+			ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("td[Name=entry]"));
+			foreach (IWebElement element in elements)
+			{
+				ContactData contact = new ContactData(element.Text);
+				contacts.Add(new ContactData(element.Text));
+			}
+			return contacts;
+		}
+
 		private bool IsElementPresent(By by)
 		{
 			try

@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -16,9 +17,6 @@ namespace WebAddressbookTests
 	[Test]
 	public void EditAddressBookEntry()
 		{
-			
-			app.Navigator.GoToAddNewPage();
-			app.Contacts.InitNewContactCreation();
 			ContactData contact = new ContactData("aaa");
 			contact.Middlename = "bbb";
 			contact.Lastname = "ccc";
@@ -37,9 +35,16 @@ namespace WebAddressbookTests
 			contact.Address2 = "rrr";
 			contact.Phone2 = "sss";
 			contact.Notes = "ttt";
-			app.Contacts.FillContactForm(contact);
-			app.Contacts.SubmitContactCreation();
-			app.Navigator.ReturnToContactPage();
+
+			List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+			app.Contacts.Create(contact);
+
+			List<ContactData> newContacts = app.Contacts.GetContactList();
+			oldContacts.Add(contact);
+			oldContacts.Sort();
+			newContacts.Sort();
+			Assert.AreEqual(oldContacts, newContacts);
 		}
 	}
 }
