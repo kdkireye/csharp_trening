@@ -72,8 +72,8 @@ namespace WebAddressbookTests
 				return;
 				}
 
-			ContactData newData = new ContactData("cvbgfh");
-			Create(new ContactData("Kristina"));
+			ContactData newData = new ContactData("cvbgfh", "ljhkjb");
+			Create(new ContactData("Kristina", "gdsxgf"));
 		}
 
 		public ContactHelper Remove(int n)
@@ -142,8 +142,7 @@ namespace WebAddressbookTests
 			return this;
 		}
 
-
-
+		
 		public ContactHelper SubmitContactModification()
 		{
 			driver.FindElement(By.Name("update")).Click();
@@ -167,11 +166,15 @@ namespace WebAddressbookTests
 		{
 			List<ContactData> contacts = new List<ContactData>();
 			manager.Navigator.GoToContactPage();
-			ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("td[Name=entry]"));
+			//
+			
+			ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[Name=entry]"));
+		
 			foreach (IWebElement element in elements)
 			{
-				ContactData contact = new ContactData(element.Text);
-				contacts.Add(new ContactData(element.Text));
+				IList<IWebElement> cells = element.FindElements(By.TagName("Задание №9"));
+				ContactData contact = new ContactData(cells[1].Text,cells[2].Text);
+				//contacts.Add(new ContactData(element.Text));
 			}
 			return contacts;
 		}

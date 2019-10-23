@@ -14,7 +14,7 @@ namespace WebAddressbookTests.tests
 		[Test]
 		public void ContactModificationTest()
 		{
-			ContactData newData = new ContactData("zzz");
+			ContactData newData = new ContactData("zzz", "gfrsgf");
 			newData.Middlename = "nnn";
 			newData.Lastname = "zzz";
 			newData.Nickname = "ddd";
@@ -33,9 +33,10 @@ namespace WebAddressbookTests.tests
 			newData.Phone2 = "bbb";
 			newData.Notes = "vvv";
 
-			List<ContactData> oldContacts = app.Contacts.GetContactList();
-
 			app.Contacts.IsModifyContact();
+
+			List<ContactData> oldContacts = app.Contacts.GetContactList();
+						
 			app.Contacts.Modify(newData);
 
 			List<ContactData> newContacts = app.Contacts.GetContactList();
