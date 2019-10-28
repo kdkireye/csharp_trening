@@ -166,17 +166,18 @@ namespace WebAddressbookTests
 		{
 			List<ContactData> contacts = new List<ContactData>();
 			manager.Navigator.GoToContactPage();
-			//
-			
+						
 			ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[Name=entry]"));
 		
 			foreach (IWebElement element in elements)
 			{
 				IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-				ContactData contact = new ContactData(cells[1].Text,cells[2].Text);
-				//contacts.Add(new ContactData(element.Text));
+				//ContactData contact = new ContactData(cells[1].Text,cells[2].Text);
+				contacts.Add(new ContactData(cells[1].Text, cells[2].Text));
 			}
 			return contacts;
+
+
 		}
 
 		private bool IsElementPresent(By by)
