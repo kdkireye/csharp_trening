@@ -17,9 +17,9 @@ namespace WebAddressbookTests
 	[Test]
 	public void EditAddressBookEntry()
 		{
-			ContactData contact = new ContactData("aaa", "juyhrfyuh");
+			ContactData contact = new ContactData("ccc", "juyhrfyuh");
 			contact.Middlename = "bbb";
-			contact.Lastname = "ccc";
+			contact.Lastname = "aaa";
 			contact.Nickname = "ddd";
 			contact.Title = "eee";
 			contact.Company = "fff";
