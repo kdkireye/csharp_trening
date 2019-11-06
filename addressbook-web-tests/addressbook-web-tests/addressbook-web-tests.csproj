@@ -95,10 +95,12 @@
     <Compile Include="appmanager\LoginHelper.cs" />
     <Compile Include="appmanager\NavigationHelper.cs" />
     <Compile Include="tests\LoginTests.cs" />
+    <Compile Include="tests\SearchTests.cs" />
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\GroupCreationTests.cs" />
     <Compile Include="tests\AddAddressBookEntry.cs" />
+    <Compile Include="tests\TestForExample12.cs" />
     <Compile Include="tests\UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>

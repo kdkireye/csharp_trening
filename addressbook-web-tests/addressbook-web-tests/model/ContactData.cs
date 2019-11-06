@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -125,7 +126,7 @@ namespace WebAddressbookTests
 			{
 				return "";
 			}
-			return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+			return  Regex.Replace(phone, "[ -()]","") + "\r\n";
 		}
 
 		public string Fax { get; set;}
@@ -173,6 +174,65 @@ namespace WebAddressbookTests
 		public string Phone2 { get; set;}
 		
 		public string Notes { get; set;}
-		
-	}
+
+		public string allDetailsForm;
+
+		public string AllDetailsForm
+		{
+			get
+			{
+				if (allDetailsForm != null)
+				{
+					return AllDetailsForm;
+				}
+				else
+				{
+					return (Lastname) + (Firstname) + (Address + AllPhones + AllEmails).Trim();
+				}
+			}
+			set
+			{
+				AllDetailsForm = value;
+			}
+		}
+		private string CleanDetailFormUp(string detailsForm)
+		{
+			if (detailsForm == null || detailsForm == "")
+			{
+				return "";
+			}
+			return Regex.Replace(detailsForm, "[ -()'\r?\n\r?\n']", "");
+			//	//+ "\r\n";
+		}
+			//public string allDetails;
+
+			//public string AllDetails
+			//{
+			//	get
+			//	{
+			//		if (allDetails != null)
+			//		{
+			//			return AllDetails;
+			//		}
+			//		else
+			//		{
+			//			return (CleanDetailUp(Firstname) + CleanDetailUp(Lastname)).Trim() + (Address + AllEmails + AllPhones).Trim();
+			//		}
+			//	}
+			//	set
+			//	{
+			//		AllDetails = value;
+			//	}
+			//}
+			//private string CleanDetailUp(string details)
+			//{
+			//	if (details == null || details == "")
+			//	{
+			//		return "";
+			//	}
+			//	return Regex.Replace(details, "[ -()]", "") + "\r\n";
+			//}
+		}
 }
+
+

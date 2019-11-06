@@ -17,14 +17,14 @@ namespace WebAddressbookTests
 		{
 			this.baseURL = baseURL;
 		}
-		
+
 		public void GoToHomePage()
 		{
 			if (driver.Url == baseURL + "addressbook/")
 			{
 				return;
 			}
-			driver.Navigate().GoToUrl(baseURL+"/addressbook");
+			driver.Navigate().GoToUrl(baseURL + "/addressbook");
 		}
 
 		public void GoToGroupsPage()
@@ -67,6 +67,8 @@ namespace WebAddressbookTests
 			}
 			driver.FindElement(By.LinkText("home")).Click();
 		}
-	
+
 	}
 }
+
+
