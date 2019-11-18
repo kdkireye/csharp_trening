@@ -298,22 +298,34 @@ namespace WebAddressbookTests
 			return Int32.Parse(m.Value);
 		}
 
-		public string GetContactInformationFromDetailPage()
+		public ContactData GetContactInformationFromDetailPage()
 		{
 			manager.Navigator.GoToHomePage();
 
 			ViewContactDetailsPage(0);
 
-			string text = driver.FindElement(By.Id("content")).Text;
+			string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\r\n", "\n");
+			string[] cells = contentDetails.Split('\n');
+			string fullName = cells[0];
+			string address = cells[5];
+			string homePhone = cells[7];
+			string mobilePhone = cells[8];
+			string workPhone = cells[9];
+			string email = cells[12];
+			string email2 = cells[13];
+			string email3 = cells[14];
 
-			return text.Replace("\r\n", "").Replace(" ","").Replace("H:","").Replace("M:","").Replace("W:",""); 
-
-			//return new ContactData(details, detailsForm)
-			//{
-			//AllDetails = allDetails,
-			//AllDetailsForm = allDetailsForm
-			//};
-
+			return new ContactData(fullName)
+			{
+				FullName = fullName,
+				Address = address,
+				Home = homePhone,
+				Mobile = mobilePhone,
+				Work = workPhone,
+				Email = email,
+				Email2 = email2,
+				Email3 = email3,
+			};
 		}
 			
 			public void ViewContactDetailsPage(int index)
