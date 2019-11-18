@@ -226,7 +226,7 @@ namespace WebAddressbookTests
 			}
 			set
 			{
-				AllDetailsForm = value;
+				allDetailsForm = value;
 			}
 		}
 		private string CleanDetailFormUp(string detailsForm)

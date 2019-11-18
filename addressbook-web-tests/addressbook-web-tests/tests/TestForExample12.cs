@@ -16,7 +16,7 @@ namespace WebAddressbookTests
 		public void TestForExample12()
 		{
 			string fromForm = app.Contacts.GetContactInformationFromEditForm1(0);
-			string fromDetails = app.Contacts.GetContactInformationFromDetailPage();
+			string fromDetails = app.Contacts.GetContactInformationFromDetailPage().FullName;
 
 			//verification
 			Assert.AreEqual(fromForm, fromDetails);
