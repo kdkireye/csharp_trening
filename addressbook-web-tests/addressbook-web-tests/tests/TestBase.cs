@@ -9,9 +9,11 @@ namespace WebAddressbookTests
 {
 	public class TestBase
 	{
+		public static bool PERFORM_LONG_UI_CHECKS = true;
+
 		protected ApplicationManager app;
 
-		[SetUp]
+	[SetUp]
 		public void SetupApplicationManager()
 		{
 			app = ApplicationManager.GetInstance();
