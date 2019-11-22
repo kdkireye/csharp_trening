@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NUnit.Framework;
-
+using WebAdressbookTests;
 
 namespace WebAddressbookTests.tests
 {
 	[TestFixture]
 
-	public class ContactRemovalTests : AuthTestBase
+	public class ContactRemovalTests : ContactTestBase
 	{
 		[Test]
 
@@ -20,13 +20,20 @@ namespace WebAddressbookTests.tests
 
 			app.Contacts.IsModifyContact();
 
-			List<ContactData> oldContacts = app.Contacts.GetContactList();
-						
-			app.Contacts.Remove(0);
+			List<ContactData> oldContacts = ContactData.GetAll();
+			ContactData toBeRemoved = oldContacts[1];
+			app.Contacts.Remove(toBeRemoved);
+			System.Threading.Thread.Sleep(100);
+			List<ContactData> newContacts = ContactData.GetAll();
 
-			List<ContactData> newContacts = app.Contacts.GetContactList();
-			oldContacts.RemoveAt(0);
+			oldContacts.RemoveAt(1);
+
 			Assert.AreEqual(oldContacts, newContacts);
+
+			foreach (ContactData contact in newContacts)
+			{
+				Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+			}
 		}
 	}
 }

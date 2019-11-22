@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using WebAdressbookTests;
 
 namespace WebAddressbookTests.tests
 {
 	[TestFixture]
 
-	public class ContactModificationTests : AuthTestBase
+	public class ContactModificationTests : ContactTestBase
 	{
 		[Test]
 		public void ContactModificationTest()
@@ -35,16 +36,26 @@ namespace WebAddressbookTests.tests
 
 			app.Contacts.IsModifyContact();
 
-			List<ContactData> oldContacts = app.Contacts.GetContactList();
-						
-			app.Contacts.Modify(newData);
+			List<ContactData> oldContacts = ContactData.GetAll();
+			ContactData oldContactData = oldContacts[0];
 
-			List<ContactData> newContacts = app.Contacts.GetContactList();
+			ContactData newContactData = null;
+			app.Contacts.ModifyContact(oldContactData, newContactData);
+
+			List<ContactData> newContacts = ContactData.GetAll();
 			oldContacts[0].Firstname = newData.Firstname;
 			oldContacts[0].Lastname = newData.Lastname;
 			oldContacts.Sort();
 			newContacts.Sort();
 			Assert.AreEqual(oldContacts, newContacts);
+
+			foreach (ContactData contact in newContacts)
+			{
+				if (contact.Id == oldContactData.Id)
+				{
+					Assert.AreEqual(contact.Id, oldContactData.Id);
+				}
+			}
 		}
 	}
 }

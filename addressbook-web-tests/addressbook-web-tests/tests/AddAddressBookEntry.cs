@@ -11,38 +11,25 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System.IO;
+using System.Linq;
+using WebAdressbookTests;
 
 namespace WebAddressbookTests
 {
 	[TestFixture]
-	public class AddAddressBookEntry : AuthTestBase
+	public class AddAddressBookEntry : ContactTestBase
 	{
  
 
 	public static IEnumerable<ContactData> RandomContactDataProvider()
 		{
 			List<ContactData> contacts = new List<ContactData>();
-			for (int i = 0; i < 5; i ++)
+			for (int i = 0; i < 5; i++)
 			{
-				contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+				contacts.Add(new ContactData(GenerateRandomString(20))
 				{
 					Lastname = GenerateRandomString(20),
-					Firstname = GenerateRandomString(20),
-					Middlename = GenerateRandomString(20),
-					Nickname = GenerateRandomString(20),
-					Title = GenerateRandomString(20),
-					Company = GenerateRandomString(20),
-					Address = GenerateRandomString(100),
-					Home = GenerateRandomString(20),
-					Mobile = GenerateRandomString(20),
-					Work = GenerateRandomString(20),
-					Fax = GenerateRandomString(20),
-					Email = GenerateRandomString(20),
-					Email2 = GenerateRandomString(20),
-					Email3 = GenerateRandomString(20),
-					Homepage = GenerateRandomString(20),
-					Address2 = GenerateRandomString(20),
-					Phone2 = GenerateRandomString(20)
+				
 				});
 			}
 			return contacts;
@@ -83,14 +70,14 @@ namespace WebAddressbookTests
 			//contact.Phone2 = "sss";
 			//contact.Notes = "ttt";
 
-			List<ContactData> oldContacts = app.Contacts.GetContactList();
+			List<ContactData> oldContacts = ContactData.GetAll();
 
 			app.Contacts.Create(contact);
 
-			List<ContactData> newContacts = app.Contacts.GetContactList();
+			List<ContactData> newContacts = ContactData.GetAll();
 			oldContacts.Add(contact);
-			oldContacts.Sort();
-			newContacts.Sort();
+			oldContacts = oldContacts.OrderBy(e => e.Lastname).ThenBy(e => e.Firstname).ToList();
+			newContacts = newContacts.OrderBy(e => e.Lastname).ThenBy(e => e.Firstname).ToList();
 			Assert.AreEqual(oldContacts, newContacts);
 		}
 	}

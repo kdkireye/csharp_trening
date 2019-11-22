@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LinqToDB;
+using WebAdressbookTests;
 
 namespace WebAddressbookTests
 
@@ -15,5 +16,10 @@ namespace WebAddressbookTests
 
 		public ITable<ContactData> Contacts { get { return GetTable<ContactData>(); } }
 
+		public ITable<ContactData> ContactsInGroup { get { return GetTable<ContactData>(); } }
+
+		public ITable<GroupContactRelation> GCR { get { return GetTable<GroupContactRelation>(); } }
+
+		}
 	}
-	}
+
