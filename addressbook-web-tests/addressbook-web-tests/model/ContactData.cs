@@ -17,13 +17,15 @@ namespace WebAddressbookTests
 		}
 
 		private string allPhones;
+		private string allEmails;
+		private string fullName;
 
 		//private string firstname;
 		//private string middlename = "";
 		//private string lastname;
 		//private string nickname = "";
 		//private string title = "";
-	    //private string company = "";
+		//private string company = "";
 		//private string address = "";
 		//private string home = "";
 		//private string mobile = "";
@@ -43,12 +45,14 @@ namespace WebAddressbookTests
 			Lastname = lastname;
 		}
 
-		
+
 		public ContactData(string fullName)
 		{
 
 		}
+
 		public bool Equals(ContactData other)
+
 		{
 			if (Object.ReferenceEquals(other, null))
 			{
@@ -173,8 +177,7 @@ namespace WebAddressbookTests
 
 		public string FullName { get; set; }
 
-		public string allEmails;
-
+		
 		public string AllEmails
 		{
 			get
@@ -193,27 +196,26 @@ namespace WebAddressbookTests
 				allEmails = value;
 			}
 		}
+			   
+		public string FullName
 
-		private string fullName;
-
-		//public string FullName
-		//{
-		//	get
-		//	{
-		//		if (fullName != null)
-		//		{
-		//			return fullName.Trim();
-		//		}
-		//		else
-		//		{
-		//			return (Firstname.Trim() + " " + Lastname.Trim());
-		//		}
-		//	}
-		//	set
-		//	{
-		//		fullName = value;
-		//	}
-		//}
+		{
+			get
+			{
+				if (fullName != null)
+				{
+					return fullName.Trim();
+				}
+				else
+				{
+					return (Firstname.Trim() + " " + Lastname.Trim());
+				}
+			}
+			set
+			{
+				fullName = value;
+			}
+		}
 
 		private string CleanUpEmail(string email)
 		{
