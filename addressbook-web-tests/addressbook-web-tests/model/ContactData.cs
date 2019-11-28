@@ -19,6 +19,9 @@ namespace WebAddressbookTests
 		private string allPhones;
 		private string allEmails;
 		private string fullName;
+		private string allInformation;
+		private string allPhonesFromForm;
+		private string contentDetails;
 
 		//private string firstname;
 		//private string middlename = "";
@@ -154,6 +157,25 @@ namespace WebAddressbookTests
 			}
 		}
 
+		public string AllPhonesFromForm
+			{
+			get
+			{
+				if (allPhonesFromForm != null)
+					{
+					return allPhonesFromForm;
+					}
+				else
+				{
+					return (AddPhonesSumbolH(Home) + AddPhoneSumbolM(Mobile) + AddPhoneSumbolW(Work)).Trim();
+				}
+			}
+			set
+				{
+				allPhones = value;
+				}
+			}
+
 		private string CleanUp(string phone)
 		{
 			if (phone == null || phone == "")
@@ -162,6 +184,31 @@ namespace WebAddressbookTests
 			}
 			return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("H:", "").Replace("M:", "").Replace("W:", "") + "\r\n";
 		}
+
+		        private string AddPhoneSumbolH(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "H: "+ phone;
+        }
+        private string AddPhoneSumbolM(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "M: " + phone;
+        }
+        private string AddPhoneSumbolW(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "W: " + phone;
+        }
 
 		[Column(Name = "fax")]
 		public string Fax { get; set;}
@@ -196,7 +243,45 @@ namespace WebAddressbookTests
 				allEmails = value;
 			}
 		}
-			   
+			 
+		        public string AllInformationFromForm
+        {
+            get
+            {
+                if (allInformation != null)
+                {
+                    return allInformation;
+                }
+                else
+                {
+                    return (FullName + Adress + AllPhonesFromForm + AllEmails).Replace("\n","").Replace("\r", "").Trim();
+                }
+            }
+            set
+            {
+                allInformation = value;
+            }
+        }
+
+        public string AllInformationFromDetailPage
+        {
+            get
+            {
+                if (contentDetails != null)
+                {
+                    return contentDetails;
+                }
+                else
+                {
+                    return (FullName + Adress + AllPhones+ AllEmails).Replace("\n", "").Replace("\r", "").Trim();
+                }
+            }
+            set
+            {
+                contentDetails = value;
+            }
+        }
+
 		public string FullName
 
 		{
@@ -278,6 +363,24 @@ namespace WebAddressbookTests
 			}
 		}
 
+		        public List<ContactData> GetContact()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from c in db.Contacts
+                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
+                        select c).Distinct().ToList();
+            }
+        }
+        public List<ContactData> GetContactsWithGroup(string groupId)
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from c in db.Contacts from gcr in db.GCR.Where(p => p.GroupId == groupId && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00") select c).Distinct().ToList();
+            }
+        }
+	}
+}
 
 		//public string allDetails;
 

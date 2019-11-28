@@ -17,6 +17,13 @@ namespace WebAdressbookTests
 			List<ContactData> oldList = group.GetContacts();
 			ContactData contact = ContactData.GetAll().Except(oldList).First();
 
+			var manager = app.Groups.GetManager();
+			manager.Navigator.GoToGroupsPage();
+			app.Groups.EnsureThereIsAtLeastOneGroup();
+			manager.Navigator.GoToHomePage();
+			app.Contacts.EnsureThereIsAtLeastOneContact();
+			app.Contacts.EnsureThereContactAddTheGroup(contact, group);
+
 			app.Contacts.AddContactToGroup(contact, group);
 
 

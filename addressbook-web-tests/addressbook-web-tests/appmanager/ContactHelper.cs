@@ -104,11 +104,11 @@ namespace WebAddressbookTests
 			return this;
 		}
 
-		public ContactHelper SelectContact(String id)
-		{
-			driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='" + id + "'])")).Click();
-			return this;
-		}
+		//public ContactHelper SelectContact(String id)
+		//{
+			//driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='" + id + "'])")).Click();
+			//return this;
+		//}
 
 		public ContactHelper Remove(ContactData contact)
 		{
@@ -343,29 +343,84 @@ namespace WebAddressbookTests
 
 			ViewContactDetailsPage(0);
 
-			string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\r\n", "\n");
-			string[] cells = contentDetails.Split('\n');
-			string fullName = cells[0];
-			string address = cells[5];
-			string homePhone = cells[7];
-			string mobilePhone = cells[8];
-			string workPhone = cells[9];
-			string email = cells[12];
-			string email2 = cells[13];
-			string email3 = cells[14];
+			//string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\r\n", "\n");
+			//string[] cells = contentDetails.Split('\n');
+			//string fullName = cells[0];
+			//string address = cells[5];
+			//string homePhone = cells[7];
+			//string mobilePhone = cells[8];
+			//string workPhone = cells[9];
+			//string email = cells[12];
+			//string email2 = cells[13];
+			//string email3 = cells[14];
+//
+			//return new ContactData(fullName)
 
-			return new ContactData(fullName)
+			string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\n", "").Replace("\r", "");
+
+			return new ContactData(contentDetails)
 			{
-				FullName = fullname,
-				Address = address,
-				Home = homePhone,
-				Mobile = mobilePhone,
-				Work = workPhone,
-				Email = email,
-				Email2 = email2,
-				Email3 = email3,
+				AllInformationFromDetailPage = contentDetails
+
+				//FullName = fullname,
+				//Address = address,
+				//Home = homePhone,
+				//Mobile = mobilePhone,
+				//Work = workPhone,
+				//Email = email,
+				//Email2 = email2,
+				//Email3 = email3,
 			};
 		}
+
+		public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+			{
+				manager.Navigator.GoToHomePage();
+				SelectGroupFilter(group.Id);	
+
+				bool selectGroupHasElement = false;
+			List<ContactData> contactsInGroup = group.GetContacts();
+			
+			foreach(ContactData c in contactsInGroup)
+				{
+
+				if (c.Equals(contact))
+					{
+					selectedGroupHasElement = true;
+					break;
+					}
+				}
+			}
+
+		List<string> groupsHasElement = new List<string>();
+
+		List<GroupData> allGroups = GroupData.GetAll();
+		foreach(GroupData g in allGroups)
+				{
+                
+			if (g.Id == group.Id)
+
+                {
+                    continue;
+                }
+
+                contactsInGroup = g.GetContacts();
+
+                foreach (ContactData c in contactsInGroup)
+                {
+                    if (c.Equals(contact))
+                    {
+                        groupsHasElement.Add(g.Id);
+                        break;
+                    }
+
+                }
+            };
+
+
+            Console.WriteLine(groupsHasElement);
+
+        }
 			
 			public void ViewContactDetailsPage(int index)
 		{
@@ -450,6 +505,20 @@ namespace WebAddressbookTests
 			new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
 		}
 	}
+
+private bool newIsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        } 
 }
-	
+}
+}
 
